@@ -3,10 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Eloquent\EmployeesRepository;
 use Illuminate\Http\Request;
+use PDF;
 
 class EmployeesApiController extends Controller
 {
+
+    private $empRepo;
+    public function __construct() {
+        $this->empRepo = new EmployeesRepository();
+    }
     /**
      * Display a listing of the resource.
      */
@@ -46,4 +53,7 @@ class EmployeesApiController extends Controller
     {
         //
     }
+
+
+
 }

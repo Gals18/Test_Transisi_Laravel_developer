@@ -16,7 +16,8 @@ class AppServiceProvider extends ServiceProvider
          \App\Repositories\Contracts\CompanyRepositoryInterface::class,
          \App\Repositories\Eloquent\CompanyRepository::class,
          \App\Repositories\Contracts\EmployeesRepositoryInterface::class,
-         \App\Repositories\Eloquent\EmployeesRepository::class
+         \App\Repositories\Eloquent\EmployeesRepository::class,
+         \Barryvdh\Snappy\ServiceProvider::class,
       );
    }
 

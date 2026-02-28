@@ -18,7 +18,7 @@ class CompanyController extends Controller
 
    public function index()
    {
-      $companies = $this->companyRepo->paginate(10);
+      $companies = $this->companyRepo->paginate(5);
       return view('companies.index', compact('companies'));
    }
 
@@ -56,4 +56,18 @@ class CompanyController extends Controller
       $this->companyRepo->delete($id);
       return redirect()->route('companies.index')->with('success', 'Data perusahaan berhasil dihapus!');
    }
+
+   public function getApi(Request $request)
+{
+    // Mengambil data untuk select2 ajax dengan pagination
+    $search = $request->q;
+    $companies = $this->companyRepo->search($search, 10); // Kita perlu tambah method search di repo
+
+    return response()->json([
+        'results' => $companies->map(function($item) {
+            return ['id' => $item->id, 'text' => $item->name];
+        }),
+        'pagination' => ['more' => $companies->hasMorePages()]
+    ]);
+}
 }

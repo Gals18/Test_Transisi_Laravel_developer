@@ -13,9 +13,9 @@ class CompanyRepository implements CompanyRepositoryInterface
       return companies::all();
    }
 
-   public function paginate($perPage = 10)
+   public function paginate($perPage)
    {
-      return companies::latest()->paginate($perPage);
+      return companies::paginate($perPage);
    }
 
    public function create(array $data)
@@ -59,4 +59,13 @@ class CompanyRepository implements CompanyRepositoryInterface
       }
       return $company->delete();
    }
+   public function search($query, $perPage = 10)
+   {
+      return companies::query()
+         ->when($query, function ($q) use ($query) {
+            $q->where('name', 'like', '%' . $query . '%');
+         })
+         ->paginate($perPage);
+   }
+
 }
